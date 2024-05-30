@@ -1,0 +1,16 @@
+{
+  "name": "morse",
+  "version": "1.0.0",
+  "author": "Lucas Saliés Brum <paxa@paxa.dev> (https://paxa.dev)",
+  "type": "module",
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "clean": "rm -rf node_modules bun.lockb apps/*/node_modules apps/*/bun.lockb"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
