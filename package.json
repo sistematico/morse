@@ -8,7 +8,8 @@
     "clean": "rm -rf node_modules bun.lockb apps/*/node_modules apps/*/bun.lockb"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "sass": "^1.77.3"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

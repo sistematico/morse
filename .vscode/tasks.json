@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "bun: dev - apps/site",
+			"detail": "bunx --bun vite",
+			"type": "npm",
+			"script": "dev",
+			"path": "apps/site",
+			"problemMatcher": []
+		}
+	]
+}
