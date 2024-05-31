@@ -1,10 +1,13 @@
 {
   "name": "morse",
+  "description": "A chat app using Vite, Vue.js, Tailwind CSS in front-end and Hono and Drizzle ORM on back-end, both created with Bun.",
   "version": "1.0.0",
   "author": "Lucas Saliés Brum <paxa@paxa.dev> (https://paxa.dev)",
   "type": "module",
   "workspaces": ["apps/*"],
   "scripts": {
+    "f:dev": "cd apps/site && bun dev",
+    "b:dev": "cd apps/api && bun dev",
     "clean": "rm -rf node_modules bun.lockb apps/*/node_modules apps/*/bun.lockb"
   },
   "devDependencies": {

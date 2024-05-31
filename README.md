@@ -23,8 +23,17 @@ To run:
 bun run index.ts
 ```
 
+## Development
+
+```bash
+bun run b:dev
+bun run f:dev
+```
+
+
 ## 🕐 ChangeLog
 
+- `2024/05/31` - Changed Tailwind CSS styles
 - `2024/05/29` - project created with [Bun v1.1.10](./package.json)
   - Added [Vite v5.2.0](./apps/site) & [Vue.js v3.4.21](./apps/site)  
 
