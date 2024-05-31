@@ -1,10 +1,11 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { addClient, removeClient, broadcastMessage } from './utils/websocket'
+import type { ServerWebSocket } from 'bun'
 
 const app = new Hono()
 
 app.use('*', cors())
-
 app.get('/', (c) => {
   return c.text('Morse API')
 })
@@ -20,15 +21,15 @@ const server = Bun.serve<{ socketId: number }>({
     open(ws) {
       const socketId = Math.random()
       ws.data = { socketId } // Inicializa ws.data
-      //addClient(socketId, ws)
+      addClient(socketId, ws)
       console.log(`WebSocket connection opened: ${socketId}`)
     },
     message(ws, message) {
       console.log(`Received ${message} from ${ws.data.socketId}`)
-      //broadcastMessage(String(message))
+      broadcastMessage(String(message))
     },
     close(ws) {
-      //removeClient(ws.data.socketId)
+      removeClient(ws.data.socketId)
       console.log(`WebSocket connection closed: ${ws.data.socketId}`)
     }
   },
