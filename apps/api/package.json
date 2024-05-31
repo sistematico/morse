@@ -1,4 +1,8 @@
 {
+  "name": "@morse/api",
+  "version": "1.0.0",
+  "author": "Lucas Saliés Brum <paxa@paxa.dev> (https://paxa.dev)",
+  "license": "MIT",
   "scripts": {
     "dev": "bun run --hot src/index.ts"
   },

@@ -3,8 +3,11 @@
   "description": "A chat app using Vite, Vue.js, Tailwind CSS in front-end and Hono and Drizzle ORM on back-end, both created with Bun.",
   "version": "1.0.0",
   "author": "Lucas Saliés Brum <paxa@paxa.dev> (https://paxa.dev)",
+  "license": "MIT",
   "type": "module",
-  "workspaces": ["apps/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "f:dev": "cd apps/site && bun dev",
     "b:dev": "cd apps/api && bun dev",
@@ -16,5 +19,6 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }

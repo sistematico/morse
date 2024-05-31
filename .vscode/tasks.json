@@ -2,11 +2,22 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "bun: dev - apps/site",
+			"label": "bun:dev - apps/site",
 			"detail": "bunx --bun vite",
 			"type": "npm",
 			"script": "dev",
 			"path": "apps/site",
+			"problemMatcher": [],
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		},
+		{
+			"label": "bun:dev - apps/api",
+			"detail": "bun run --hot src/index.ts",
+			"type": "npm",
+			"script": "dev",
+			"path": "apps/api",
 			"problemMatcher": [],
 			"runOptions": {
 				"runOn": "folderOpen"
