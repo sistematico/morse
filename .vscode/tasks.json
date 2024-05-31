@@ -7,7 +7,10 @@
 			"type": "npm",
 			"script": "dev",
 			"path": "apps/site",
-			"problemMatcher": []
+			"problemMatcher": [],
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
 		}
 	]
 }

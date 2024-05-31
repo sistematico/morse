@@ -42,9 +42,9 @@ onBeforeUnmount(() => {
           v-model="message"
           @keyup.enter="sendMessage"
           placeholder="Type a message..."
-          class="flex-1 p-2 border border-gray-600 bg-gray-700 rounded-lg mr-2 text-white outline-none outline-none:hover"
+          class="grow min-w-2 p-2 border-4 border-indigo-500 bg-zinc-800 rounded-lg me-2 text-white outline-none outline-none:hover"
         />
-        <button @click="sendMessage" class="p-2 bg-blue-600 text-white rounded-lg">Send</button>
+        <button @click="sendMessage" class="flex-none p-2 bg-indigo-500 text-white rounded-lg">Send</button>
       </div>
     </div>
   </div>
