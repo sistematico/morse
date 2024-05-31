@@ -1,0 +1,60 @@
+---
+- name: Update systemd unit and reload daemon
+  hosts: all
+  become: true
+  remote_user: root
+
+  tasks:
+    - name: Ensure the sudoers.d directory exists
+      file:
+        path: /etc/sudoers.d
+        state: directory
+        mode: '0750'
+
+    - name: Create /etc/sudoers.d/morse with permissions
+      copy:
+        content: 'nginx ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop morse-hono.service, /usr/bin/systemctl start morse-hono.service, /usr/bin/systemctl restart morse-hono.service, /usr/bin/systemctl status morse-hono.service'
+        dest: /etc/sudoers.d/morse
+        mode: '0440'
+      notify:
+        - Validate sudoers
+
+    - name: Alterar as unidades do systemd
+      ansible.builtin.copy:
+        src: files/etc/systemd/system/morse-hono.service
+        dest: /etc/systemd/system/morse-hono.service
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload systemd
+
+    - name: Aguardar a unidade estar disponível
+      ansible.builtin.systemd:
+        name: morse-hono.service
+        state: restarted
+        enabled: true
+
+    - name: Copy Nginx configuration files
+      copy:
+        src: files/etc/nginx/99-morse.paxa.dev.conf
+        dest: /etc/nginx/sites.d/99-morse.paxa.dev.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload nginx
+
+  handlers:
+    - name: Reload systemd
+      ansible.builtin.systemd:
+        daemon_reload: true
+    
+    - name: Reload nginx
+      ansible.builtin.systemd:
+        state: restarted
+        enabled: true
+        daemon_reload: true
+        name: nginx
+
+    - name: Validate sudoers
+      command: /usr/sbin/visudo -cf /etc/sudoers
+      ignore_errors: no

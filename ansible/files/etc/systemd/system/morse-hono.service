@@ -1,0 +1,13 @@
+[Unit]
+Description=Hono Morse
+After=network.target
+
+[Service]
+User=nginx
+WorkingDirectory=/var/www/morse/apps/api
+ExecStart=/home/nginx/.bun/bin/bun /var/www/morse/apps/api/src/index.ts
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
