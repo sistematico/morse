@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { user } from './store.ts'
+
+interface Message {
+  user: string
+  message: string
+}
 
 const url = import.meta.env.VITE_WS_URL as string
-const messages = ref<string[]>([])
-const message = ref<string>('')
+const username = ref('')
+const messages = ref<Message[]>([])
+const message = ref('')
 let socket: WebSocket
 
 const sendMessage = () => {
-  if (message.value && socket.readyState === WebSocket.OPEN) socket.send(message.value)
+  if (message.value && socket.readyState === WebSocket.OPEN) {
+    const data = { user: user.name, message: message.value }
+    socket.send(JSON.stringify(data))
+  }
+
   message.value = ''
 }
 
@@ -15,7 +26,9 @@ onMounted(() => {
   socket = new WebSocket(url)
 
   socket.addEventListener('message', (event) => {
-    messages.value.push(event.data)
+    console.log(`Event ${event.data}`)
+    const data = JSON.parse(event.data)
+    messages.value.push(data)
   })
 })
 
@@ -32,11 +45,24 @@ onBeforeUnmount(() => {
           <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
         </a>
       </div>
-      <div class="chat-container flex flex-col h-full w-full p-4">
+      <div class="chat-container flex flex-col h-full w-full p-4" v-if="user.name === ''">
+        <div>
+          <input
+            v-model="username"
+            @keyup.enter="sendMessage"
+            placeholder="Username"
+            class="min-w-2 p-2 border-4 border-indigo-500 bg-zinc-800 rounded-lg me-2 text-white outline-none"
+          />
+          <button @click="user.name = username" class="flex-none p-2 bg-indigo-500 text-white rounded-lg">OK</button>      
+        </div>
+      </div>
+      <div class="chat-container flex flex-col h-full w-full p-4" v-else>
         <div class="messages flex-1 overflow-y-auto border-4 border-indigo-500 p-4 mb-4 bg-[#242424] rounded-lg">
-          <div v-for="(message, index) in messages" :key="index" class="message mb-2 p-2 border-4 border-indigo-500 rounded-lg">
-            {{ message }}
-          </div>
+          <template v-for="data in messages">
+            <div class="message mb-2 p-2 border-4 border-indigo-500 rounded-lg" :class="{ 'bg-zinc-900': data.user === user.name }">
+              {{ data.user }} - {{ data.message }}
+            </div>
+          </template>
         </div>
         <div class="flex">
           <input

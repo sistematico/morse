@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { addClient, removeClient, broadcastMessage } from './utils/websocket'
-import type { ServerWebSocket } from 'bun'
+// import type { ServerWebSocket } from 'bun'
 
 const app = new Hono()
 
@@ -24,9 +24,11 @@ const server = Bun.serve<{ socketId: number }>({
       addClient(socketId, ws)
       console.log(`WebSocket connection opened: ${socketId}`)
     },
-    message(ws, message) {
-      console.log(`Received ${message} from ${ws.data.socketId}`)
-      broadcastMessage(String(message))
+    message(ws, payload) {
+      const data = JSON.parse(String(payload))
+      console.log(`Received ${payload} from ${ws.data.socketId}`)
+      console.log(`User ${data.user} Message ${data.message}`)
+      broadcastMessage(data.user, data.message)
     },
     close(ws) {
       removeClient(ws.data.socketId)
